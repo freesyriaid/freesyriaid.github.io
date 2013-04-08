@@ -1,0 +1,194 @@
+﻿<!doctype html>
+<html lang="ar">
+<head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="Free Syria ID" />
+    <meta name="description" content="Free Syria ID creates your free Syrian ID" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" media="screen" href="css/bootstrap-rtl.css" type="text/css" />
+	<style>
+		@font-face {
+			font-family: 'kdroid';
+			font-style: normal;
+			font-weight: 400;
+			src: url('font/kdroid.eot');
+			src: url('font/kdroid.eot?#iefix') format('embedded-opentype'),
+			   url('font/kdroid.woff') format('woff'),
+			   url('font/kdroid.ttf') format('truetype');
+		}
+		/* right to left for all elements in the page */
+		*{
+			direction: rtl;
+			font-family: 'kdroid';
+		}
+		
+		.btn, .input-xlarge{
+			font-family: 'kdroid';
+		}
+		
+		::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder{
+			font-family: 'kdroid';
+		}
+		
+		/* center the title of the page */
+		.brand{
+			position: absolute;
+			width: 100%;
+			right: 0;
+			text-align: center;
+			margin: auto;
+		}
+		
+		.issue{
+			margin-top: 20px;
+			margin-right: 10px;
+		}
+		
+		.footer{
+			margin-top: 60px;
+			text-align: center;
+			background-color: #f5f5f5;
+		}
+		
+		.help{
+			padding-bottom: 20px;
+		}
+		
+		.emblem{
+			padding-top: 50px;
+		}
+		
+		/* navbar padding */
+		body{
+		  padding-top: 75px;
+		}
+		@media (max-width: 979px){
+			body{
+				padding-top: 0px;
+			}
+		}
+		
+		#main{
+			margin: 0 auto;
+			float: none;
+		}
+		
+		.modal{
+			height: 390px; max-height: 500px;
+			width: 885px; max-width: 1000px;
+		}
+
+		#id_template, #id_canvas{
+			display: none;
+		}
+
+	</style>
+	<link rel="icon" href="img/favicon.png" type="image/png" />
+	<link rel="shortcut icon" href="img/favicon.png" type="image/png" />
+    <title> Free Syria ID </title>
+</head>
+<body>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<div class="brand">
+					<span>الهوية السورية الحرة</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-fluid">
+		<div class="span3 offset3">
+			<div class="container">
+				<h4 class="help"> يمكنك الآن استخراج هويتك الحرة, قم بإدخال معلوماتك ثم اضغط استخراج الهوية </h4>
+				
+				<label>الاسم</label>
+				<input type="text" id="user_name" class="input-xlarge" placeholder="الثورة السورية" />
+				<label>تاريخ الميلاد</label>
+				<input type="text" id="birth_date" class="input-xlarge" placeholder="15/3/2011" />
+				<label>مكان الميلاد</label>
+				<input type="text" id="birth_place" class="input-xlarge" placeholder="سوريا الحرة" />
+				<label>الحالة الاجتماعية</label>
+				<input type="text" id="martial_status" class="input-xlarge" placeholder="ثورة يتيمة" />
+				<label>المهنة</label>
+				<input type="text" id="job_title" class="input-xlarge" placeholder="تحرير كامل التراب السوري" />
+				<div class="container issue">
+					<a id="issue_btn" href="#id_modal" role="button" data-toggle="modal" class="btn btn-large btn-primary">استخراج الهوية</a>
+				</div>
+			</div>
+		</div>
+		<div class="span3 text-center emblem">
+			<img src="img/revolution.jpg" alt="Free Syria" />
+			<h3>الجمهورية العربية السورية</h3>
+			<h4>وزارة الداخلية</h4>
+			<h6>إدارة هويات الثورة</h6>
+		</div>
+	</div>
+	
+	<div id="id_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="id_title" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+			<h3 id="id_title">هويتي الحرة</h3>
+		</div>
+		<div class="modal-body">
+			<img id="id_image" src="img/id.jpg" alt="My ID" />
+		</div>
+	</div>
+	
+	<div class="footer">
+		<div class="container">
+			<p class="muted credit">FreeSyriaID.com is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/"> cc-wiki </a></p>
+            <p class="muted credit">
+                <a href="http://www.facebook.com/pages/Free-Syria-ID/231411220332720"><img src="img/facebook_icon.png" alt="Facebook Page" /></a>
+                <a href="mailto:khaled@freesyriaid.com">Contact us</a> or visit our page on
+            </p>
+		</div>
+	</div>
+	
+	<img id="id_template" src="img/id.jpg" alt="ID Template" />
+	<canvas id="id_canvas" width="851" height="315"></canvas>
+	
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+		function arabic_digits(str){
+			newValue="";
+			for (i=0;i<str.length;i++){
+				ch=str.charCodeAt(i);
+				if (ch>=48 && ch<=57){
+					newChar=ch+1584;
+					newValue=newValue+String.fromCharCode(newChar);
+				}
+				else
+					newValue=newValue+String.fromCharCode(ch);
+			}
+			return newValue;
+		}
+		
+		$("#issue_btn").click(function(event){
+			user_info = {};
+			user_info.user_name      = $("#user_name").val();
+			user_info.birth_date     = $("#birth_date").val();
+			user_info.birth_place    = $("#birth_place").val();
+			user_info.martial_status = $("#martial_status").val();
+			user_info.job_title      = $("#job_title").val();
+			
+			id_canvas = $("#id_canvas")[0]
+			cntx = id_canvas.getContext("2d");
+			cntx.drawImage($("#id_template")[0], 0, 0);
+			cntx.font = "26px kdroid";
+			cntx.fillText(user_info.user_name, 600, 125);
+			cntx.fillText(arabic_digits(user_info.birth_date), 600, 163);
+			cntx.fillText(user_info.birth_place, 600, 197);
+			cntx.fillText(user_info.martial_status, 600, 235);
+			cntx.fillText(user_info.job_title, 600, 270);
+			
+			$("#id_image")[0].src = id_canvas.toDataURL("image/jpg");
+		});
+
+	</script>
+</body>
+</html>
